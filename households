@@ -1,0 +1,25 @@
+hou <- Households
+table(hou$AfternoonPct==100)
+table(hou$MorningPct==100)
+table(hou$AvgSalesValue>=150)
+min(hou$AvgDiscount[hou$AvgSalesValue>=150])
+min(hou$AvgSalesValue[hou$AvgDiscount>=25])
+table(hou$NumVisits>=300)
+148/(2352+148)
+library(caret)
+pre <- preProcess(hou)
+hounorm <- predict(pre,hou)
+summary(hounorm)
+set.seed(200)
+dist <- dist(hounorm,method = "euclidean")
+shoppers <- hclust(dist,method = "ward.D")
+plot(shoppers,labels=F)
+#k-means
+set.seed(200)
+clust <- kmeans(hounorm,centers = 10)
+table(clust$cluster)
+clust$centers
+set.seed(5000)
+clust <- kmeans(hounorm,centers = 5)
+table(clust$cluster)
+clust$centers
